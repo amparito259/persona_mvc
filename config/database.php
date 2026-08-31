@@ -20,7 +20,7 @@ class Database
         }
 
         $this->host = $_ENV['DB_HOST'] ?? 'localhost';
-        $this->dbname = $_ENV['DB_NAME'] ?? 'persona_mariana_martinez';
+        $this->dbname = $_ENV['DB_NAME'] ?? 'persona_luz_amparo';
         $this->username = $_ENV['DB_USER'] ?? 'root';
         $this->password = $_ENV['DB_PASS'] ?? '';
 
