@@ -1,7 +1,5 @@
 <?php
-require_once __DIR__ . "/../apps/models/persona.php";
+require_once __DIR__ . "/../apps/controllers/productoControllers.php";
 
-$persona = new Persona();
-$personas = $persona->listar();
-
-print_r($personas);
+$productoControllers = new productoControllers();
+$productoControllers->index();

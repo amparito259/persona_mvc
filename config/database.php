@@ -1,43 +1,29 @@
 <?php
-class Database
-{
+class database{
     private $host;
+    private $port;
     private $dbname;
-    private $username;
+    private $user;
     private $password;
-    private $conexion;
+    private $connection;
 
-    public function __construct()
-    {
-        $envFile = __DIR__ . '/../.env';
-        if (file_exists($envFile)) {
-            $lines = file($envFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-            foreach ($lines as $line) {
-                if (strpos(trim($line), '#') === 0) continue;
-                list($key, $value) = explode('=', $line, 2);
-                $_ENV[trim($key)] = trim($value);
-            }
-        }
+    public function __construct(){
+        $env = parse_ini_file(__DIR__ . "/../.env");
 
-        $this->host = $_ENV['DB_HOST'] ?? 'localhost';
-        $this->dbname = $_ENV['DB_NAME'] ?? 'persona_luz_amparo';
-        $this->username = $_ENV['DB_USER'] ?? 'root';
-        $this->password = $_ENV['DB_PASS'] ?? '';
-
-        try {
-            $this->conexion = new PDO(
-                "mysql:host=" . $this->host . ";dbname=" . $this->dbname,
-                $this->username,
-                $this->password
-            );
-            $this->conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        } catch (PDOException $e) {
-            echo "Error de conexión: " . $e->getMessage();
-        }
+        $this->host = $env["BD_HOST"];
+        $this->port = $env["BD_PORT"];
+        $this->dbname = $env["BD_NAME"];
+        $this->user = $env["BD_USER"];
+        $this->password = $env["BD_PASSWORD"];
     }
 
-    public function conectar()
-    {
-        return $this->conexion;
+    public function connect(){
+        $dsn = "mysql:host={$this->host};port={$this->port};dbname={$this->dbname}";
+
+        $this->connection = new PDO ($dsn,$this->user,-$this->password);
+
+        return $this->connection;
     }
-}
+
+    }
+?>
